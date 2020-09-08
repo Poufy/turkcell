@@ -7,7 +7,7 @@
 {
     "wwn": 2,
     "capacity": 30,
-    "iops": 4000,
+    "iops": 4500,
     "throughput": 3
 },
 {

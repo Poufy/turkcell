@@ -40,9 +40,9 @@ def normalizeData(value, total):
 
 def calculateScore(storage):
     #Normalizing the requested data
-    requestedCapacity = normalizeData(int(sys.argv[2]), totalCapacity) #In TB
+    requestedCapacity = normalizeData(int(sys.argv[2]), totalCapacity)
     requestedIOPS = normalizeData(int(sys.argv[3]), totalIOPS)
-    requestedThroughput = normalizeData(int(sys.argv[4]), totalThroughput) # GB/s
+    requestedThroughput = normalizeData(int(sys.argv[4]), totalThroughput)
 
     #Normalizing the storage data
     storageCapacity = normalizeData(storage["capacity"], totalCapacity)
@@ -54,8 +54,7 @@ def calculateScore(storage):
     IOPSMulti = getMultiplier("IOPSMulti")
     throughputMulti = getMultiplier("throughputMulti")
 
-    score =  (storageCapacity - requestedCapacity * capacityMulti) +  (storageIOPS - requestedIOPS * IOPSMulti) + (storageThroughput - requestedThroughput * throughputMulti)
-
+    score =  ((storageCapacity - requestedCapacity) * capacityMulti) + ((storageIOPS - requestedIOPS) * IOPSMulti) + ((storageThroughput - requestedThroughput) * throughputMulti)
     return score
 
 # Return all storages that have enough capacity, iops, and throughput.
@@ -68,8 +67,10 @@ def findAllViableStorages():
 
     for i in range(len(storages)):
         if storages[i]["capacity"] >= requestedCapacity and storages[i]["iops"] >= requestedIOPS and storages[i]["throughput"] >= requestedThroughput:
+
             viableStorages.append(storages[i])
             increaseTotalAttributes(storages[i])
+
     return viableStorages
 
 # Find the best match from the storages
